@@ -1,0 +1,1845 @@
+Задачи решались в рамках курса "Анализ данных" от Яндекс.Практикум
+
+Задача 1. 
+Выберите столбцы id_product, name, category, name_store из таблицы products_data_all.
+
+SELECT
+
+id_product,
+
+name,
+
+category,
+
+name_store
+
+FROM
+
+products_data_all;
+
+
+Задача 2.
+Выберите все столбцы таблицы products_data_all.
+
+SELECT
+
+*
+
+FROM
+
+products_data_all; 
+
+
+Задача 3. 
+Покупатели обменивают чеки на бонусы при будущих покупках. Информацию из чеков собрали в таблице transactions (англ. «транзакции, сделки»). Выберите все столбцы таблицы в базе и изучите их.
+
+SELECT
+
+*
+
+FROM
+
+transactions;
+
+
+Задача 4. 
+Данные о погоде, которые вы добыли через API Погоды, тоже есть в базе. Убедитесь в этом — напишите запрос на выборку всех данных из таблицы weather.
+
+SELECT
+
+*
+
+FROM
+
+weather;
+
+
+Задача 5. 
+Руководитель группы аналитиков хочет изучить изменения на полках магазинов и в поведении покупателей 1 июня — во Всемирный день молока. За выгрузку данных в SQL ответственны вы. Вперёд!Изучите товары и продажи магазинов в этот день. В таблице products_data_all информация о ежедневном обновлении каталога товаров.
+
+Напишите запрос к таблице и выберите следующие поля:
+
+· Название продукта (name)
+
+· Цена (price)
+
+· Название магазина (name_store)
+
+· Дата (date_upd)
+
+Сделайте срез по категории (category) и дате (date_upd). Вам нужна категория 'молоко и сливки' и Всемирный день молока: '2019-06-01'.
+
+
+SELECT
+
+name,
+
+price,
+
+name_store,
+
+date_upd
+
+FROM
+
+products_data_all
+
+WHERE
+
+category = 'молоко и сливки'
+
+AND date_upd = '2019-06-01';
+
+
+Задача 6. 
+Выгрузите поля name, price, name_store, date_upd категории 'молоко и сливки' за четыре оставшиеся субботы июня: 8, 15, 22 и 29 числа.
+
+SELECT
+
+name,
+
+price,
+
+name_store,
+
+date_upd
+
+FROM
+
+products_data_all
+
+WHERE
+
+category = 'молоко и сливки'
+
+AND
+
+date_upd IN ('2019-06-08', '2019-06-15', '2019-06-22', '2019-06-29'); 
+
+
+Задача 7.
+
+Помогите проверить гипотезу: «В международный день молока покупают больше молока и сливок». Вам понадобится выборка из таблицы transactions (англ. «транзакции»). Выгрузите все данные о покупках молока и сливок за 1 июня 2019 года.
+
+Обратите внимание, что в таблице transactions в поле date зафиксированы часы, минуты и секунды. Напишите ограничение, которое позволит выбрать покупки, совершённые в период от 1 июня (включительно) по 2 июня (не включая).
+
+В таблице transactions нет информации о категории товара. Однако мы подготовили для вас список c уникальными идентификаторами (id_product) товаров категории «молоко и сливки». Вот он:
+
+( 0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30, 31,
+
+32, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+
+61, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,76, 77, 78, 80, 81, 82, 83, 84, 86, 88, 89, 90,
+
+91, 92, 93, 95, 96, 97, 98, 99, 100, 102, 103, 104, 105,106, 107, 108, 109, 110, 111, 112, 113, 114,
+
+115, 116, 118, 119, 5, 14, 27, 33, 41, 46, 62, 79, 85, 87, 94, 101, 117 );
+
+
+
+SELECT
+
+*
+
+FROM
+
+transactions
+
+WHERE
+
+date >= '2019-06-01'
+
+AND date < '2019-06-02'
+
+AND id_product IN ( 0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29, 30, 31,
+
+32, 34, 35, 36, 37, 38, 39, 40, 42, 43, 44, 45, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+
+61, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75,76, 77, 78, 80, 81, 82, 83, 84, 86, 88, 89, 90,
+
+91, 92, 93, 95, 96, 97, 98, 99, 100, 102, 103, 104, 105,106, 107, 108, 109, 110, 111, 112, 113, 114,
+
+115, 116, 118, 119, 5, 14, 27, 33, 41, 46, 62, 79, 85, 87, 94, 101, 117 );
+
+
+Задача 8. 
+Напишите запрос, подсчитывающий общее количество строк в таблице products_data_all. Назовите переменную cnt.
+
+SELECT
+
+COUNT(*) AS cnt
+
+FROM
+
+products_data_all;
+
+
+Задача 9.
+
+Напишите запрос, подсчитывающий количество строк в таблице products_data_all; количество строк в столбце name и количество уникальных продуктов. Назовите результирующие переменные cnt, name_cnt и name_uniq_cnt соответственно.
+
+SELECT
+
+COUNT(*) AS cnt,
+
+COUNT(name) AS name_cnt,
+
+COUNT(DISTINCT name) AS name_uniq_cnt
+
+FROM
+
+products_data_all;
+
+
+Задача 10.
+
+Напишите запрос, подсчитывающий среднюю цену по всем продуктам из таблицы products_data_all. Стоимость товаров указана в столбце price. Результирующую переменную назовите average.
+
+SELECT
+
+AVG(price) AS average
+
+FROM
+
+products_data_all;
+
+
+Задача 11.
+
+Напишите запрос, подсчитывающий среднюю цену товара с названием 'Молоко пастеризованное Домик в деревне 2,5%, 930 мл' в магазине 'Семёрочка'. Результирующую переменную назовите average.
+
+SELECT
+
+AVG(price) AS average
+
+FROM
+
+products_data_all
+
+WHERE
+
+name = 'Молоко пастеризованное Домик в деревне 2,5%, 930 мл'
+
+AND name_store = 'Семёрочка';
+
+Задача 12.
+
+Напишите запрос, подсчитывающий сумму стоимости всех продуктов в магазине 'Молочные вкусности'. Назовите переменную summa.
+
+SELECT
+
+SUM(price) AS summa
+
+FROM
+
+products_data_all
+
+WHERE
+
+name_store = 'Молочные вкусности';
+
+
+Задача 13.
+
+Найдите цену самого дорогого товара таблицы products_data_all. Назовите переменную max_price.
+
+SELECT
+
+MAX(price)
+
+FROM
+
+products_data_all;
+
+
+Задача 14.
+
+Напишите запрос, который посчитает разницу между максимальной и минимальной ценой продукта 'Масло топленое Ecotavush 99%, 500 г' в магазине 'ВкусМилк'. Назовите переменную max_min_diff.
+
+SELECT
+
+MAX(price) - MIN(price) AS max_min_diff
+
+FROM
+
+products_data_all
+
+WHERE
+
+name = 'Масло топленое Ecotavush 99%, 500 г'
+
+AND name_store = 'ВкусМилк';
+
+Задача 15.
+
+В данных о молочной продукции тоже есть ошибка. Данные поля weight записаны как строки, хотя на самом деле это числа. По такому поводу стоит написать баг-репорт. А пока исправьте эту ошибку локально, в запросе.
+
+Напишите запрос, который найдёт средний вес (weight) товаров из таблицы products_data_all в граммах (где units='г'). Назовите переменную average. Измените тип данных в столбце weight на число с плавающей точкой.
+
+
+SELECT
+
+AVG(weight::real) AS average
+
+FROM
+
+products_data_all
+
+WHERE units='г';
+
+
+Задача 16.
+
+Напишите запрос, который найдёт максимальный вес продукта в категории 'молоко и сливки'. Воспользуйтесь конструкцией CAST AS для приведения значений к числу с плавающей точкой и назовите переменную max_weight.
+
+SELECT
+
+MAX(CAST(weight AS real)) AS max_weight
+
+FROM
+
+products_data_all
+
+WHERE category = 'молоко и сливки';
+
+
+Задача 17.
+
+Проверьте на наличие NULL поле weight таблицы products. Выведите поля: id_product, units, weight.
+
+SELECT
+
+id_product,
+
+units,
+
+weight
+
+FROM
+
+products
+
+WHERE
+
+weight IS NULL;
+
+
+Задача 18.
+
+Найдите количество значений NULL в поле weight таблицы products.
+
+SELECT
+
+COUNT(*)
+
+FROM
+
+products
+
+WHERE
+
+weight IS NULL;
+
+
+Задача 19.
+
+Найдите средний вес продукции, сгруппированный по единицам измерения (units). Сохраните его в поле с именем avg_weight.
+
+В выборке сначала выведите столбец avg_weight, а затем столбец units.
+
+SELECT
+
+AVG(weight::real) AS avg_weight,
+
+units
+
+FROM
+
+products
+
+GROUP BY
+
+units;
+
+
+Задача 20.
+
+Запросом с CASE-выражением замените NULL на среднее (округленное до целого) в каждой группе units. Назовите получившееся в результате работы CASE поле weight_info.
+
+Вам понадобится ответ предыдущей задачи:
+
+Скопировать кодSQL
+
+"72" "%"
+
+"1" "кг"
+
+"1" "л"
+
+"805" "мл"
+
+"402" "г"
+
+Выведите поля с названием продукта name и заполненными пропусками weight_info.
+
+
+SELECT
+
+name,
+
+CASE WHEN (weight is NULL AND units = '%') THEN '72'
+
+WHEN (weight is NULL AND units = 'кг') THEN '1'
+
+WHEN (weight is NULL AND units = 'л') THEN '1'
+
+WHEN (weight is NULL AND units = 'мл') THEN '805'
+
+WHEN (weight is NULL AND units = 'г') THEN '402'
+
+ELSE
+
+weight
+
+END AS weight_info
+
+FROM
+
+products;
+
+
+Задача 21.
+
+В прошлой теме вы обнаружили, что у каких-то продуктов странная единица измерения веса — он был указан в процентах. Скорее всего, в данные закралась ошибка. Найдите строку с % в поле units. Выведите все её столбцы.
+
+SELECT
+
+*
+
+FROM
+
+products
+
+WHERE
+
+units LIKE '%!%' ESCAPE '!';
+
+
+
+Задача 22.
+
+Найдите продукты компаний Му и Му-му. Выведите все данные об этих товарах из таблицы products.
+
+Названия продуктов сохранены в поле name таблицы products.
+
+
+SELECT
+
+*
+
+FROM
+
+products
+
+WHERE
+
+name LIKE '%Му%';
+
+Задача 23.
+
+Из товаров фирм Му и Му-Му выберите продукты категории 'молоко и сливки'. Найдите их среднюю стоимость во Всемирный день молока — 1.06.2019. Сохраните её в переменной avg_price.
+
+Напомним имена полей:
+
+· Название продукта — name в таблице products;
+
+· Категория — category в таблице products;
+
+· ID Продукта — id_product в таблице products;
+
+· Цена — price в таблице products_stores.
+
+· Дата — date_upd в таблице products_stores.
+
+
+SELECT
+
+AVG(price) AS avg_price
+
+FROM
+
+products_stores
+
+WHERE
+
+date_upd ='2019-06-01'
+
+AND id_product IN(
+
+SELECT
+
+id_product
+
+FROM
+
+products
+
+WHERE
+
+name LIKE '%Му%'
+
+AND category = 'молоко и сливки');
+
+
+Задача 24. Напишите запрос, который выведет:
+
+· номер транзакции — id_transaction из таблицы transactions
+
+· название категории — category из таблицы products
+
+· название продукта — name из таблицы products
+
+Условие присоединения — равенство значений в полях products.id_product и transactions.id_product. Названия полей результирующей таблицы: id_transaction, category, name.
+
+Выведите 10 строк. Отсортируйте данные по возрастанию номера транзакции.
+
+SELECT
+
+transactions.id_transaction AS id_transaction,
+
+products.category AS category,
+
+products.name AS name
+
+FROM
+
+transactions
+
+INNER JOIN products ON products.id_product = transactions.id_product
+
+ORDER BY
+
+id_transaction
+
+LIMIT 10;
+
+
+Задача 25.
+
+Данные о продажах и данные о погоде хранятся в разных таблицах. 
+
+Для каждой транзакции получите следующие данные:
+
+· уникальный день и время (date) транзакции из таблицы transactions;
+
+· температура (temp) из таблицы weather;
+
+· наличие дождя (rain) из таблицы weather;
+
+· идентификатор транзакции (id_transaction) из таблицы transactions.
+
+Выведите 4 поля результирующей таблицы: date, temp, rain и id_transaction.
+
+Отсортируйте данные по убыванию даты покупки.
+
+SELECT DISTINCT
+
+transactions.date AS date,
+
+weather.temp AS temp,
+
+weather.rain AS rain,
+
+transactions.id_transaction
+
+FROM
+
+transactions
+
+INNER JOIN weather ON CAST(weather.date AS date) = CAST(transactions.date AS date)
+
+ORDER BY
+
+date DESC;
+
+
+Задача 25.
+
+Напишите запрос, который выведет уникальные товары с ценой (price) больше 300 рублей.
+
+Выберите уникальные названия товаров name из таблицы products. Назовите полученное поле — name, и выведите его.
+
+Присоедините к products данные таблицы products_stores методом INNER JOIN по полю id_product.
+
+В блоке WHERE выберите продукты дороже 300 рублей из таблицы products_stores.
+
+
+SELECT DISTINCT
+
+products.name AS name
+
+FROM
+
+products
+
+INNER JOIN products_stores ON products_stores.id_product = products.id_product
+
+WHERE
+
+products_stores.price > 300;
+
+
+Задача 26.
+
+Выберите транзакции (покупки), при которых приобретались продукты категории 'масло сливочное и маргарин' , причём только 20 июня 2019 года.
+
+Из таблиц transactions и products заполучите:
+
+· день и время — date из таблицы transactions
+
+· номер транзакции — id_transaction из таблицы transactions
+
+· название категории — category из таблицы products
+
+· название продукта — name из таблицы products
+
+Присоедините к transactions данные таблицы products методом INNER JOIN по полю id_product.
+
+В результирующей таблице выведите четыре поля: date, id_transaction, category, name.
+
+SELECT
+
+transactions.date AS date,
+
+transactions.id_transaction AS id_transaction,
+
+products.category AS category,
+
+products.name AS name
+
+FROM
+
+transactions
+
+INNER JOIN products ON products.id_product = transactions.id_product
+
+WHERE
+
+products.category = 'масло сливочное и маргарин'
+
+AND CAST(transactions.date as date) = '2019-06-20';
+
+
+Задача 27.
+
+Выведите цену товаров на 13 июня 2019 года, для которых единица измерения — 'мл'.
+
+Заполучите:
+
+название товара — name из таблицы products
+
+категорию — category из таблицы products
+
+единицы измерения — units из таблицы products
+
+вес — weight из таблицы products
+
+цену — price из таблицы products_stores
+
+Соедините методом INNER JOIN таблицы products_stores и products по полю id_product.
+
+Выведите переменные: name, category, units, weight, price.
+
+SELECT
+
+products.name AS name,
+
+products.category AS category,
+
+products.units AS units,
+
+products.weight AS weight,
+
+products_stores.price AS price
+
+FROM
+
+products
+
+INNER JOIN products_stores ON products_stores.id_product = products.id_product
+
+WHERE
+
+products.units = 'мл'
+
+AND CAST(products_stores.date_upd AS date) = '2019-06-13';
+
+
+Задача 28.
+
+Авторы есть, а книг нет — это тревожит. А все ли продукты из products продаются в продуктовых магазинах products_stores?
+
+Напишите запрос, который выберет:
+
+· уникальные id_product из таблицы products,
+
+· name из таблицы products,
+
+· id_store из таблицы products_stores.
+
+Присоедините таблицу products_stores к таблице products методом LEFT JOIN по полю id_product.
+
+Полям результирующей таблицы дайте имена: id_product, name, id_store.
+
+
+SELECT DISTINCT
+
+products.id_product AS id_product,
+
+products.name AS name,
+
+products_stores.id_store AS id_store
+
+FROM
+
+products
+
+LEFT JOIN products_stores ON products_stores.id_product = products.id_product;
+
+
+Задача 29.
+
+Вы как поставщик можете предложить магазину товар, которого там ещё нет.
+
+Выведите уникальные названия товаров, которые не продавались в магазине (id_store) с уникальным идентификатором: 3.
+
+1) Выберите уникальные названия продуктов name из таблицы products. Сохраните их в переменной name.
+
+2) Объедините внешний запрос с подзапросом subquery по полю id_product. В подзапросе выберите уникальные id_product из таблицы transactions, где id_store равен 3.
+
+
+SELECT
+
+products.name AS name
+
+FROM
+
+products
+
+LEFT JOIN (
+
+SELECT DISTINCT
+
+transactions.id_product AS id_product
+
+--выберите уникальные товары, которые продаются в магазине
+
+FROM
+
+transactions
+
+LEFT JOIN products ON transactions.id_product = products.id_product
+
+WHERE
+
+id_store = 3
+
+) AS subquery ON subquery.id_product = products.id_product
+
+WHERE
+
+subquery.id_product IS NULL;
+
+
+Задача 30.
+
+Выведите названия продуктов, которые не продавались ни в одном магазине 11 июня 2019 года.
+
+1) Выберите уникальные названия продуктов name из таблицы products. Сохраните их в переменной name.
+
+2) Объедините внешний запрос с подзапросом subquery по полю id_product. В подзапросе выберите id_product и id_store на 11 июня 2019 года.
+
+SELECT
+
+products.name AS name
+
+FROM
+
+products
+
+LEFT JOIN (
+
+SELECT
+
+id_product,
+
+id_store
+
+FROM
+
+transactions
+
+WHERE
+
+CAST(transactions.date AS date) = '2019-06-11') AS subquery ON subquery.id_product = products.id_product
+
+WHERE
+
+subquery.id_store IS NULL;
+
+
+Задача 31.
+
+Выведите даты, на которые нет данных о транзакциях, но есть информация о погоде:
+
+1) Получите дату (date) из таблицы weather. Обратите внимание, что дату нужно привести к правильному типу конструкцией CAST.
+
+2) Присоедините таблицу weather к таблице transactions методом RIGHT JOIN по полю date.
+
+3) Составьте срез данных в блоке WHERE: выберите только пустые даты из таблицы transactions конструкцией IS NULL.
+
+4) Выведите поле date результирующей таблицы.
+
+SELECT
+
+CAST(weather.date AS date)
+
+FROM
+
+transactions
+
+RIGHT JOIN weather ON CAST(weather.date AS date) = CAST(transactions.date AS date)
+
+WHERE
+
+transactions.date IS NULL;
+
+Задача 32.
+
+Решите задачу из прошлой темы, но способом RIGHT JOIN.
+
+Выведите уникальные названия товаров, которые не продавались в магазине с уникальным идентификатором 3.
+
+
+SELECT
+
+products.name AS name
+
+FROM (
+
+SELECT DISTINCT
+
+transactions.id_product AS id_product
+
+FROM
+
+transactions
+
+WHERE
+
+id_store = 3
+
+) AS subquery
+
+RIGHT JOIN products ON products.id_product = subquery.id_product
+
+WHERE
+
+subquery.id_product IS NULL;
+
+
+Задача 33.
+
+За 5 июня 2019 года выведите номер транзакции; название магазина, где она произошла; категорию и название приобретённого продукта.
+
+Выберите:
+
+· id_transaction из таблицы transactions
+
+· name_store из таблицы stores
+
+· category из таблицы products
+
+· name из таблицы products
+
+Соедините таблицу transactions с таблицей products по полю id_product; затем соедините transactions со stores по полю id_store.
+
+В блоке WHERE сделайте срез по дате '2019-06-05'.
+
+Выведите поля: id_transaction, name_store, category, name.
+
+
+SELECT
+
+transactions.id_transaction AS id_transaction,
+
+stores.name_store AS name_store,
+
+products.category AS category,
+
+products.name AS name
+
+FROM
+
+transactions
+
+INNER JOIN products ON transactions.id_product = products.id_product
+
+INNER JOIN stores ON transactions.id_store = stores.id_store
+
+WHERE
+
+CAST(transactions.date AS date) = '2019-06-05';
+
+
+Задача 34.
+
+Найдите информацию о погоде и названиях купленных товаров за все дни (включая те, когда покупок не было). Отсортируйте данные по убыванию даты и возрастанию имени и выведите первые 30 строк.
+
+Выведите дату (date), температуру (temp), наличие дождя (rain) и название товара (name).
+
+Получите:
+
+· date из таблицы weather
+
+· temp из weather
+
+· rain из weather
+
+· name из products
+
+Присоедините к weather таблицу transactions по полю date. Затем, присоедините к transactions и таблицу products по полю id_product.
+
+SELECT
+
+CAST(weather.date AS date) as date,
+
+weather.temp AS temp,
+
+weather.rain AS rain,
+
+products.name AS name
+
+FROM
+
+weather
+
+LEFT JOIN transactions ON CAST(weather.date AS date) = CAST(transactions.date AS date)
+
+LEFT JOIN products ON transactions.id_product = products.id_product
+
+ORDER BY
+
+date DESC,
+
+name
+
+LIMIT
+
+30;
+
+
+Задача 35.
+
+Напишите запрос, который выведет транзакции (включая названия продуктов), совершённые в те дни, когда не было дождя.
+
+Выберите поле id_transaction таблицы transactions. Сохраните его в переменной id_transaction. Поле name таблицы products сохраните в переменной name.
+
+Соедините таблицу transactions с таблицей products по полю id_product. Затем соедините таблицу transactions с таблицей weather по полю date. Не забудьте привести значения столбца date таблиц transactions и weather к типу date конструкцией CAST.
+
+Сделайте срез данных в блоке WHERE. Ограничение для среза: weather.rain = '0'.
+
+
+SELECT
+
+transactions.id_transaction AS id_transaction,
+
+products.name AS name
+
+FROM
+
+transactions
+
+INNER JOIN products ON products.id_product = transactions.id_product
+
+INNER JOIN weather ON CAST(weather.date AS date) = CAST(transactions.date AS date)
+
+WHERE
+
+weather.rain = '0';
+
+Задача 36.
+
+По каждой транзакции найдите количество продуктов и количество уникальных продуктов. Выведите 10 строк, содержащие номер транзакции, количество купленных при ней продуктов, количество уникальных продуктов в одной покупке. Назовите переменные id_transaction, name_cnt, name_uniq_cnt соответственно.
+
+Выберите значения столбца id_transaction таблицы transactions. Вызовите агрегирующую функцию COUNT() к столбцу name таблицы products. Затем вызовите агрегирующую функцию COUNT(DISTINCT ) к столбцу name таблицы products.
+
+Объедините таблицы transactions и products по полю id_product.
+
+Сгруппируйте значения по id_transaction.
+
+SELECT
+
+transactions.id_transaction AS id_transaction,
+
+COUNT(products.name) AS name_cnt,
+
+COUNT(DISTINCT(products.name)) AS name_uniq_cnt
+
+FROM
+
+transactions
+
+INNER JOIN products ON transactions.id_product = products.id_product
+
+GROUP BY
+
+id_transaction
+
+LIMIT
+
+10;
+
+
+Задача 37.
+
+Узнайте, в каких покупках (транзакциях) были приобретены неуникальные товары, то есть, больше одного товара одного вида. Выведите номер транзакции, количество товаров, количество уникальных товаров. Назовите переменные id_transaction, name_cnt, name_uniq_cnt соответственно.
+
+Выберите значения столбца id_transaction таблицы transactions. Вызовите агрегирующую функцию COUNT() к столбцу name таблицы products. Затем вызовите агрегирующую функцию COUNT(DISTINCT ) к столбцу name таблицы products.
+
+Объедините таблицы transactions и products.
+
+Примените конструкцию HAVING с условием, где количество продуктов (products.name) не равно числу уникальных продуктов (DISTINCT products.name). Подсчитайте количество агрегирующей функцией COUNT().
+
+SELECT
+
+transactions.id_transaction AS id_transaction,
+
+COUNT(products.name) AS name_cnt,
+
+COUNT(DISTINCT(products.name)) AS name_uniq_cnt
+
+FROM
+
+transactions
+
+INNER JOIN products ON transactions.id_product = products.id_product
+
+GROUP BY
+
+id_transaction
+
+HAVING
+
+COUNT(products.name) != COUNT(DISTINCT products.name);
+
+
+Задача 38.
+
+Посчитайте, сколько транзакций было совершено в дождливые и ясные дни. Выведите таблицу с полями: наличие дождя (rain), количество транзакций (uniq_transactions).
+
+Выберите значения поля rain из таблицы weather. Найдите количество уникальных значений столбца id_transaction таблицы transactions конструкцией COUNT(DISTINCT ).
+
+Сгруппируйте данные по значениям столбца rain таблицы weather. Способом INNER JOIN объедините таблицы transactions и weather по полю date.
+
+SELECT
+
+weather.rain AS rain,
+
+COUNT(DISTINCT(transactions.id_transaction)) AS uniq_transactions
+
+FROM
+
+transactions
+
+INNER JOIN weather ON CAST(weather.date as date) = CAST(transactions.date as date)
+
+GROUP BY
+
+rain;
+
+
+Задача 39.
+
+Выведите температуру и количество транзакций. Отсортируйте данные по возрастанию даты.
+
+В блоке SELECT:
+
+· приведите значения столбца date таблицы weather к типу date конструкцией CAST, и сохраните в переменной date;
+
+· выберите значения столбца temp таблицы weather и сохраните в переменной temp;
+
+· найдите количество уникальных значений столбца id_transaction таблицы transactions и сохраните в переменной uniq_transactions.
+
+Объедините таблицу.
+
+Сгруппируйте данные по дате и температуре. Отсортируйте по дате.
+
+SELECT
+
+CAST(weather.date as date) AS date,
+
+weather.temp AS temp,
+
+COUNT(DISTINCT(transactions.id_transaction)) AS uniq_transactions
+
+FROM
+
+weather
+
+LEFT JOIN transactions ON CAST(transactions.date as date) = CAST(weather.date as date)
+
+GROUP BY
+
+CAST(weather.date as date),
+
+temp
+
+ORDER BY
+
+date;
+
+
+Задача 40.
+
+Для каждой транзакции найдите общую стоимость покупок и их количество. Выберите столбец id_transaction таблицы transactions. Рассчитайте сумму значений столбца price в таблице products_stores. Сохраните её в переменной total.
+
+Найдите количество значений столбца id_product в таблице products_stores. Сохраните его в переменной amount. Способом LEFT JOIN присоедините таблицу products_stores к transactions по трём одновременным условиям:
+
+1. Данные столбцов products_stores.date_upd и transactions.date равны. Приведите значения полей к нужному типу конструкцией CAST.
+
+2. Данные столбцов products_stores.id_product и transactions.id_product равны.
+
+3. Данные столбцов products_stores.id_store и transactions.id_store равны.
+
+Сгруппируйте данные. Выведите только такие транзакции, стоимость которых больше 1000. 
+SELECT
+
+transactions.id_transaction AS id_transaction,
+
+SUM(products_stores.price) AS total,
+
+COUNT(products_stores.id_product) AS amount
+
+FROM
+
+transactions
+
+LEFT JOIN products_stores ON CAST(products_stores.date_upd as date ) = CAST(transactions.date as date)
+
+AND transactions.id_product = products_stores.id_product
+
+AND products_stores.id_store = transactions.id_store
+
+GROUP BY
+
+id_transaction
+
+HAVING
+
+SUM(products_stores.price) > 1000;
+
+
+Задача 41.
+
+Напишите запрос, который выберет названия продуктов (name), приобретённых 1 июня 2019 года. Во внешнем запросе выберите уникальные названия продуктов (DISTINCT name) из столбца name таблицы products. Сохраните их в переменной name. Соедините products с таблицей subq способом LEFT JOIN по полю id_product В подзапросе subq выберите id_product из таблицы transactions. Чтобы получить id_product только за 1 июня преобразуйте столбец transactions.date к типу date конструкцией CAST.
+
+SELECT
+
+DISTINCT(products.name) AS name
+
+FROM products
+
+LEFT JOIN (
+
+SELECT
+
+id_product 
+
+FROM
+
+transactions
+
+WHERE
+
+CAST(transactions.date AS date) = '2019-06-01'-- напишите ваш код здесь
+
+) AS subq ON products.id_product = subq.id_product
+
+WHERE
+
+subq.id_product IS NOT NULL;
+
+
+Задача 42.
+
+Напишите запрос, который выберет названия продуктов (name), приобретённых 8 июня 2019 года. Во внешнем запросе выберите уникальные названия продуктов (DISTINCT name) из
+
+столбца name таблицы products. Сохраните их в переменной name. Соедините products с таблицей subq способом LEFT JOIN по полю id_product В подзапросе выберите id_product из таблицы transactions. Чтобы получить id_product только за 8 июня преобразуйте столбец transactions.date к типу date конструкцией CAST.
+
+SELECT
+
+DISTINCT(products.name) AS name
+
+FROM products
+
+LEFT JOIN (
+
+SELECT
+
+id_product 
+FROM
+
+transactions
+
+WHERE
+
+CAST(transactions.date AS date) = '2019-06-08'
+
+) AS subq ON products.id_product = subq.id_product
+
+WHERE
+
+subq.id_product IS NOT NULL;
+
+
+Задача 43.
+
+Cклейте данные из предыдущих запросов в одну выборку так, чтобы значения поля name не дублировали друг друга.
+
+SELECT DISTINCT
+
+products.name AS name
+
+FROM
+
+products
+
+LEFT JOIN (
+
+SELECT
+
+id_product
+
+FROM
+
+transactions
+
+WHERE
+
+CAST(transactions.date AS date) = '2019-06-01') AS SUBQ1 ON products.id_product = SUBQ1.id_product
+
+WHERE
+
+SUBQ1.id_product IS NOT NULL
+
+UNION
+
+SELECT DISTINCT
+
+products.name AS name
+
+FROM
+
+products
+
+LEFT JOIN (
+
+SELECT
+
+id_product
+
+FROM
+
+transactions
+
+WHERE
+
+CAST(transactions.date AS date) = '2019-06-08') AS SUBQ2 ON products.id_product = SUBQ2.id_product
+
+WHERE
+
+SUBQ2.id_product IS NOT NULL;
+
+Задача 44.
+
+Сделайте запрос из предыдущего задания подзапросом и назовите его SUBQ. Во внешний запрос передайте name из SUBQ и посчитайте количество продуктов.
+
+SELECT DISTINCT
+
+COUNT(SUBQ.name) AS name
+
+FROM
+
+( SELECT DISTINCT
+
+products.name AS name
+
+FROM
+
+products
+
+LEFT JOIN (
+
+SELECT
+
+id_product
+
+FROM
+
+transactions
+
+WHERE
+
+CAST(transactions.date AS date) = '2019-06-01') AS SUBQ1 ON products.id_product = SUBQ1.id_product
+
+WHERE
+
+SUBQ1.id_product IS NOT NULL
+
+UNION
+
+SELECT DISTINCT
+
+products.name AS name
+
+FROM
+
+products
+
+LEFT JOIN (
+
+SELECT
+
+id_product
+
+FROM
+
+transactions
+
+WHERE
+
+CAST(transactions.date AS date) = '2019-06-08') AS SUBQ2 ON products.id_product = SUBQ2.id_product
+
+WHERE
+
+SUBQ2.id_product IS NOT NULL)
+
+SUBQ;
+
+
+Задача 45.
+
+Склейте запросы из предыдущих блоков командой UNION ALL, и превратите его в подзапрос с названием SUBQ.
+
+Во внешний запрос передайте name из SUBQ, и посчитайте количество продуктов.
+
+SELECT
+
+COUNT(SUBQ.name)
+
+FROM ( SELECT DISTINCT
+
+products.name AS name
+
+FROM
+
+products
+
+LEFT JOIN (
+
+SELECT
+
+id_product
+
+FROM
+
+transactions
+
+WHERE
+
+CAST(transactions.date AS date) = '2019-06-01') AS SUBQ1 ON products.id_product = SUBQ1.id_product
+
+WHERE
+
+SUBQ1.id_product IS NOT NULL
+
+UNION ALL
+
+SELECT DISTINCT
+
+products.name AS name
+
+FROM
+
+products
+
+LEFT JOIN (
+
+SELECT
+
+id_product
+
+FROM
+
+transactions
+
+WHERE
+
+CAST(transactions.date AS date) = '2019-06-08') AS SUBQ2 ON products.id_product = SUBQ2.id_product
+
+WHERE
+
+SUBQ2.id_product IS NOT NULL) AS SUBQ;
+
+Задача 46.
+
+Напишите запрос, который посчитает общее и количество уникальных продуктов в каждом магазине (name_store), информация о котором есть в таблице products_data_all. Назовите переменные name_cnt, name_uniq_cnt соответственно. Выведите название магазина, общее количество продуктов, количество уникальных продуктов.
+
+SELECT
+
+name_store,
+
+COUNT(name) AS name_cnt,
+
+COUNT(DISTINCT name) AS name_uniq_cnt
+
+FROM
+
+products_data_all
+
+GROUP BY
+
+name_store;
+
+Задача 47.
+
+Напишите запрос, который подсчитает значение максимального веса в каждой категории (category). Назовите переменную max_weight. Выведите категорию и максимальный вес.
+
+SELECT
+
+category,
+
+MAX(weight::real) AS max_weight
+
+FROM
+
+products_data_all
+
+GROUP BY
+
+category;
+
+Задача 48.
+
+Напишите запрос, который посчитает среднюю, максимальную и минимальную цены (price) товаров для каждого магазина (name_store) в таблице products_data_all. Назовите переменные соответственно average_price, max_price, min_price.
+
+Выведите название магазина; среднюю, максимальную и минимальную цены.
+
+SELECT
+
+name_store,
+
+AVG(price) AS average_price,
+
+MAX(price) AS max_price,
+
+MIN(price) AS min_price
+
+FROM
+
+products_data_all
+
+GROUP BY
+
+name_store;
+
+Задача 49.
+
+Напишите запрос, который посчитает разницу между максимальной и минимальной ценой каждого продукта в категории 'масло сливочное и маргарин' на 10 июня 2019 года. Назовите переменную max_min_diff. Переведите строковые значения дат в формат даты.
+
+Выведите название продукта, разницу между максимальной и минимальной ценой. Напомним названия нужных вам столбцов: Категория — поле category Дата — поле date_upd Цена — поле price.
+
+SELECT
+
+name,
+
+MAX(price) - MIN(price) AS max_min_diff
+
+FROM
+
+products_data_all
+
+WHERE
+
+category = 'масло сливочное и маргарин'
+
+AND date_upd :: date = '2019-06-10'
+
+GROUP BY
+
+name;
+
+Задача 50.
+
+Напишите запрос, который на дату '2019-06-05' посчитает количество товаров в каждой категории (category). Назовите переменную name_cnt и отсортируйте данные по возрастанию количества товаров. Назовите выбранную дату update_date. Обратите внимание, что дату нужно перевести из строкового типа в date. Выведите столбцы в таком порядке: дата (update_date), категория (category), количество товаров (name_cnt).
+
+SELECT
+
+date_upd::date AS update_date,
+
+category,
+
+COUNT(name) AS name_cnt
+
+FROM
+
+products_data_all
+
+WHERE
+
+date_upd::date='2019-06-05'
+
+GROUP BY
+
+update_date,
+
+category
+
+ORDER BY
+
+name_cnt;
+
+
+Задача 51.
+
+Напишите запрос, который посчитает количество уникальных продуктов в каждой категории в магазине 'Lentro' на '2019-06-30'. Назовите переменную uniq_name_cnt и отсортируйте данные по убыванию этого поля. Приведите дату к формату date и назовите поле update_date. Выведите дату, название магазина, название категории, количество уникальных продуктов.
+
+SELECT
+
+date_upd::date AS update_date,
+
+category,
+
+name_store,
+
+COUNT(DISTINCT name) AS uniq_name_cnt
+
+FROM
+
+products_data_all
+
+WHERE
+
+date_upd::date='2019-06-30'
+
+AND name_store='Lentro'
+
+GROUP BY
+
+update_date,
+
+name_store,
+
+category
+
+ORDER BY
+
+uniq_name_cnt DESC;
+
+Задача 52.
+
+Напишите запрос, который выведет топ-5 самых дорогих продуктов, отсортированных по убыванию. Выведите название продукта и стоимость. Сгруппируйте данные по столбцу name. Дайте переменной имя max_price.
+
+SELECT
+
+MAX(price) AS max_price,
+
+name
+
+FROM
+
+products_data_all
+
+GROUP BY
+
+name
+
+ORDER BY
+
+max_price DESC
+
+LIMIT 5;
+
+Задача 53.
+
+Напишите запрос, который для каждого продукта найдёт максимальную цену. Сохраните её в переменной max_price. Выведите названия и максимальную цену тех продуктов, у которых она превышает 500 рублей.
+
+SELECT
+
+name,
+
+MAX(price) AS max_price
+
+FROM
+
+products_data_all
+
+GROUP BY
+
+name
+
+HAVING
+
+MAX(price) > 500;
+
+Задача 54.
+
+Напишите запрос, который посчитает на '2019-06-03' для каждого магазина (name_store) количество товаров с весом больше 900 г (weight). Сохраните количество товаров в переменной name_cnt, а приведённую к нужному типу дату — в update_date.
+
+Выведите дату, название магазина и количество товаров только таких магазинов, в которых количество товаров меньше 10.
+
+Напомним, что вес товара нужно привести к типу real, и выбрать только те продукты, единицы измерения которых — граммы (units = 'г').
+
+SELECT
+
+date_upd::date AS update_date,
+
+name_store,
+
+COUNT(name) AS name_cnt
+
+FROM
+
+products_data_all
+
+WHERE
+
+date_upd::date='2019-06-03'
+
+AND units = 'г'
+
+AND weight::real > 900
+
+GROUP BY
+
+update_date,
+
+name_store
+
+HAVING
+
+COUNT(name) < 10;
+
+Задача 55.
+
+Напишите запрос, который посчитает количество уникальных продуктов для каждого магазина (name_store). Назовите переменную name_uniq_cnt. Найдите 3 магазина с наименьшим количеством уникальных товаров среди тех, в которых это количество превышает 30. Выведите название каждого магазина и количество уникальных товаров в нём.
+
+SELECT
+
+name_store,
+
+COUNT(DISTINCT name) AS name_uniq_cnt
+
+FROM
+
+products_data_all
+
+GROUP BY
+
+name_store
+
+HAVING
+
+COUNT(DISTINCT name)>30
+
+ORDER BY
+
+name_uniq_cnt
+
+LIMIT 3;
+
+Задача 56.
+
+Получите часы из поля date таблицы transactions. Назовите новое поле hours. Посчитайте с группировкой по полю hours, сколько товаров (id_product) было куплено. Назовите результирующую переменную cnt.
+
+Результат отсортируйте по возрастанию поля hours.
+
+SELECT
+
+EXTRACT(hour FROM date) AS hours,
+
+COUNT(id_product) AS cnt
+
+FROM
+
+transactions
+
+GROUP BY
+
+hours
+
+ORDER BY
+
+hours;
+
+
+Задача 57.
+
+Получите день из столбца date таблицы transactions. Назовите новое поле days. Подсчитайте c группировкой по дням количество купленных товаров (id_product) и назовите получившееся поле cnt. Отсортируйте результат в порядке возрастания даты.
+
+SELECT
+
+EXTRACT(day FROM date) AS days,
+
+COUNT(id_product) AS cnt
+
+FROM
+
+transactions
+
+GROUP BY
+
+days
+
+ORDER BY
+
+Days;
+
+Задача 58.
+
+Вы узнали, что 1 числа было куплено больше всего товаров. Усеките дату из поля date до дня и назовите её date_month. Найдите количество купленных в этот день продуктов (id_product), сгруппируйте по полю date_month и сохраните его в переменнойcnt. Отсортируйте результат по возрастанию date_month.
+
+SELECT
+
+DATE_TRUNC('day', date) AS date_month,
+
+COUNT(id_product) AS cnt
+
+FROM
+
+transactions
+
+GROUP BY
+
+date_month
+
+ORDER BY
+
+date_month;
+
+Задача 59.
+
+Руководитель отдела хочет получить списки покупателей, которые предпочитают товары премиум-сегмента. И сводку о том, сколько в среднем транзакций совершают пользователи за неделю. Вперёд
+
+Напишите запрос, который выберет из таблицы products_data_all идентификаторы продуктов (id_product) категории 'молоко и сливки' дороже 120 рублей или категории 'масло сливочное и маргарин' дороже 354 рублей.
+
+Напомним названия полей:
+
+· категория — category;
+
+· цена — price.
+
+SELECT
+
+id_product
+
+FROM
+
+products_data_all
+
+WHERE
+
+(category='молоко и сливки' AND price>120) OR (category='масло сливочное и маргарин' AND price>354);
+
+Задача 60.
+
+Напишите запрос, который выберет из таблицы transactions уникальные идентификаторы пользователей (user_id), приобретавших продукты (id_product) категории 'молоко и сливки' дороже 120 рублей или категории 'масло сливочное и маргарин' дороже 354 рублей.
+
+SELECT
+
+DISTINCT user_id
+
+FROM
+
+transactions
+
+WHERE
+
+id_product IN
+
+(
+
+SELECT
+
+id_product
+
+FROM
+
+products_data_all
+
+WHERE (category = 'молоко и сливки'
+
+AND price > 120)
+
+OR (category = 'масло сливочное и маргарин'
+
+AND price > 354));
+
+Задача 61.
+
+Напишите запрос для подсчёта числа уникальных транзакций id_transaction из таблицы transactions. Сгруппируйте количество транзакций по дням: усеките столбец date до дня. Назовите сгенерированный столбец с транзакциями transaction_per_day, а усечённую дату — trunc_date.
+
+Выводите столбцы в таком порядке: сначала transaction_per_day, а затем trunc_date.
+
+SELECT
+
+COUNT(DISTINCT id_transaction) AS transaction_per_day,
+
+DATE_TRUNC('day', date) AS trunc_date 
+
+FROM
+
+transactions
+
+GROUP BY
+
+trunc_date;
+
+Задача 62.
+
+Превратите запрос прошлого задания в подзапрос блока FROM. Назовите результат выполнения подзапроса SUBQ.
+
+Во внешнем запросе:
+
+· Вызовите функцию EXTRACT, чтобы извлечь номер недели из столбца trunc_date в таблице SUBQ. Результирующее поле назовите week_number.
+
+· Найдите среднее столбца transaction_per_day таблицы SUBQ и сохраните в переменной avg_week_transaction.
+
+· Сгруппируйте данные по week_number.
+
+SELECT
+
+EXTRACT(WEEK FROM SUBQ.trunc_date) AS week_number,
+
+AVG(SUBQ.transaction_per_day) AS avg_week_transaction-- напишите свой код здесь
+
+FROM (
+
+SELECT
+
+COUNT(DISTINCT id_transaction) AS transaction_per_day,
+
+DATE_TRUNC('day', date) AS trunc_date
+
+FROM
+
+transactions
+
+GROUP BY
+
+trunc_date) AS SUBQ
+
+GROUP BY
+
+week_number;
